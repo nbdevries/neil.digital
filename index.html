@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Neil de Vries - Digital Artist</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="stylesheets/base.css">
+    <link rel="stylesheet" href="stylesheets/skeleton.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+    <!-- Font Awesome -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <style type="text/css">
+
+
+      /***************************************************/
+      /* Header and logo.                                */
+      /***************************************************/
+
+      .header {
+        margin-bottom: 20px;
+        margin-top: 0;
+        height: 1px;
+        width: 960px;
+        position: fixed;
+        z-index: 3;
+      }
+
+      .header-items {
+        z-index: 2;
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        right: 4%;
+      }
+
+      .header-background {
+        background-color: white;
+        opacity: 1;
+        width: 200%;
+        right: 0%;
+        height: 220px;
+        position: fixed;
+        z-index: 1;
+        box-shadow: 0 2px 15px rgba(0,0,0,0);
+        transition: height 100ms, opacity 100ms, box-shadow 100ms;
+      }
+
+      .header-background.tiny {
+        height: 50px;
+        opacity: 0.97;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+      }
+
+      .logo-body {
+        background: url(svg/logo-color.svg);
+        background-repeat: no-repeat;
+        margin-left: 10px;
+        height: 200px;
+        margin-top: 0.5%;
+        transition: height 100ms, margin-top 100ms;
+      }
+
+      .logo-body.tiny {
+        height: 50px;
+        margin-top: 0px;
+      }
+
+      .logo {
+        margin-top: 10px;
+        height: 1px;
+      }
+
+
+      /***************************************************/
+      /* Styling for the thumbnails and their animations.*/
+      /***************************************************/
+
+      .thumbs {
+        margin-top: 25%;
+        display: inline-block;
+      }
+
+      .thumb-body {
+        float: left;
+        margin: 5px 5px 5px 5px;
+        background: #fff;
+        position: relative;
+        width: 275px;
+        height: 155px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
+
+      .thumb-image {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .thumb-icon {
+        opacity: 0.9;
+        padding-top: 45px;
+      }
+
+      .thumb-text {
+        position: absolute;
+        background-color: rgba(0,104,55,0.6);
+        font-size: inherit;
+        color: white;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+        padding-top: 0;
+        transition: opacity 500ms, background-color 500ms;
+      }
+
+      .thumb-image:hover + .thumb-text {
+        opacity: 1;
+        background-color: rgba(0,0,0,0.6);
+      }
+
+      .thumb-text:hover {
+        opacity: 1;
+        background-color: rgba(0,0,0,0.6);
+      }
+
+      /***************************************************/
+      /* Main layout.                                    */
+      /***************************************************/
+
+      body {
+        background-image:url(images/background.png);
+        text-align: center;
+        margin-bottom: 100px;
+      }
+
+      .one-third.column {
+        margin: 5px 5px 5px 5px;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="header content">
+
+        <div class="header-items">
+          <a href="#">
+            <div class="ten columns alpha logo-body header-animate"></div>
+          </a>
+        </div>
+
+        <div class="header-background header-animate">
+        </div>
+
+      </div>
+
+      <div class="columns content thumbs"/>
+
+    </div>
+
+    <script>
+
+      // 
+      $(window).on("scroll touchmove", function () {
+        $('.header-animate').toggleClass('tiny', $(document).scrollTop() > 0);
+      });
+
+      // the folders for the portfolio pieces
+      var pieces = [
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach",
+        "bonaire",
+        "outreach"
+      ];
+
+      // pieces already added to the view
+      var added = [];
+
+      // get the descripton for each piece's thumbnail
+      var description  = "NULL";
+
+      // append all portfolio thumbs in a random order
+      for (var i = pieces.length - 1; i >= 0; i--)
+      {
+        do {
+          var random = Math.floor(Math.random()*pieces.length);
+        } while (($.inArray(random,added) > -1) && (added.length > 0));
+
+        added[i] = random;
+
+        // get the description for current portfolio piece
+        $.ajax({
+          async: false,
+          url: 'portfolio/' + pieces[random] + '/description.txt',
+          dataType: 'text',
+          success: function(data) {
+            description = data.split("|");
+          }
+        });
+
+        var thumbnail =
+          '<div class="one-third column">\
+            <a class="thumb-body" href="' + description[1] + '" target="_blank">\
+              <img class="thumb-image" src="portfolio/' + pieces[random] + '/icon.png" width="100%" height="100%"/>\
+              <div class="thumb-text">\
+                <i class="fa fa-' + description[0] + ' fa-5x thumb-icon"/>\
+              </div>\
+            </a>\
+          </div>';
+
+        $(".thumbs").append(thumbnail);
+      };
+
+    </script>
+
+  </body>
+
+</html>
