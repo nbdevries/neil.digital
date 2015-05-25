@@ -1,18 +1,18 @@
 <div class="intro">
 	<br>
-	<h2>
+	<p>
 		Hi, I'm <b>Neil</b>.
-	</h2>
+	</p>
 	<h1>
 		I like to create...
 	</h1>
 </div>
 
 <div class="creation">
-	<div class="options">
-		<div class="left-text">photos</div>
-		<div class="center-text">code</div>
-		<div class="right-text">video</div>
+	<div class="options noselect">
+		<div class="top-text not-selected" {{action 'setCreation' prevCreation}}>{{prevCreation.value}}</div>
+		<div class="center-text" {{action 'openCreation' currCreation.url}}>{{currCreation.value}}</div>
+		<div class="bottom-text not-selected" {{action 'setCreation' nextCreation}}>{{nextCreation.value}}</div>
 	</div>
 	<img src="/assets/images/creation.png"/>
 </div>

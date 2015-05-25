@@ -14,20 +14,38 @@
 
 	.options {
 		color: white;
-		font-size: 8vw;
 		position: absolute;
 		width: 100%;
+		margin-top: 33%;
 		text-align: center;
-		margin-top: 36%;
+
+		.top-text {
+			font-size: 4vw;
+		}
+
+		.bottom-text {
+			margin-top: -3%;
+			font-size: 4vw;
+		}
 		
 		.center-text {
+			font-size: 8vw;
+			margin-top: -3%;
 			text-shadow: 0px 0px 50px rgba(0, 0, 0, 1),
 						 0px 0px 50px rgba(0, 0, 0, 1),
 						 0px 0px 40px rgba(0, 0, 0, 1),
 						 0px 0px 40px rgba(0, 0, 0, 1),
 						 0px 0px 40px rgba(0, 0, 0, 1);
+
+			&:hover {
+				color: green;
+				cursor: pointer;
+			}
 		}
 
+		.not-selected:hover {
+			color: green;
+		}
 	}
 
 	.right-text {

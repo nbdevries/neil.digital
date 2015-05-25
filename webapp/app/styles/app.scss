@@ -10,5 +10,15 @@ body {
 	background-image: url("/assets/images/background.png");
 }
 
+/* Remove selectability of any element this class is added to*/
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 /* Import other styles/... */
 @import 'home/landing';
