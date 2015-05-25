@@ -6,4 +6,9 @@ var Router = Ember.Router.extend({
 });
 
 export default Router.map(function() {
+	this.route('catchall', { path: '/*wildcard' });
+
+	this.resource('home', { path: '/' }, function() {
+		this.route('landing', { path: '/' });
+	});
 });
